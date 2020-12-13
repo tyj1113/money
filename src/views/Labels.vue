@@ -1,10 +1,13 @@
 <template>
-    <div>statistics</div>
+    <div>labels
+      <Nav/>
+    </div>
+
 </template>
 
 <script lang="ts">
 export default {
-name: "Statistics"
+name: "Labels"
 }
 </script>
 
