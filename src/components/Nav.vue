@@ -1,28 +1,17 @@
 <template>
       <nav>
-        <router-link to="/money">
-          <svg>
-            <use xlink:href="#money"></use>
-          </svg>
+        <router-link to="/money" class="item" >
+          <Icon name="money" />
           记账</router-link>
-        <router-link to="/labels">
-          <svg>
-            <use xlink:href="#label"></use>
-          </svg>标签</router-link>
-        <router-link to="/statistics">
-          <svg>
-            <use xlink:href="#statistics"></use>
-          </svg>统计</router-link>
+        <router-link to="/labels" class="item">
+          <Icon name="label" />标签</router-link>
+        <router-link to="/statistics" class="item">
+          <Icon name="statistics" />统计</router-link>
       </nav>
 </template>
 
 <script lang="ts">
-const importAll = (requireContext )=> requireContext.keys().forEach(requireContext);
-try{
-  importAll( require.context('../assets/icons', true, /\.svg$/))
-}catch(err){
-  console.log(err)
-}
+
 export default {
 name: "Navs"
 }
@@ -30,6 +19,21 @@ name: "Navs"
 
 <style lang="scss" scoped>
 nav{
-  border: 1px solid blue;
+  box-shadow: 0 0 3px rgba(0,0,0,0.25);
+  display: flex;
+flex-direction: row;
+  font-size: 12px;
+  .item{
+    padding: 2px 0;
+    width: 33.3333%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    .icon{
+      width: 32px;
+      height: 32px;
+    }
+  }
 }
 </style>
