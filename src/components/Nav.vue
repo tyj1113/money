@@ -13,5 +13,7 @@ name: "Navs"
 </script>
 
 <style lang="scss" scoped>
-
+nav{
+  border: 1px solid blue;
+}
 </style>

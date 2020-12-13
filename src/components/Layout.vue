@@ -1,16 +1,16 @@
 <template>
-<div>  <Layout>
-  money
-</Layout></div>
-
-
-
+  <div class="nav-wrapper">
+    <div class="content">
+     <slot/>
+    </div>
+    <Nav/>
+  </div>
 </template>
 
 <script lang="ts">
 export default {
-  name: 'Money'
-};
+name: "Layout"
+}
 </script>
 
 <style lang="scss" scoped>
@@ -20,10 +20,8 @@ export default {
   flex-direction: column;
   height: 100vh;
 }
-
-.content {
+.content{
   overflow: auto;
   flex-grow: 1;
 }
-
 </style>
