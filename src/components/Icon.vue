@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-const importAll = (requireContext) => requireContext.keys().forEach(requireContext);
+const importAll = (requireContext: __WebpackModuleApi.RequireContext) => requireContext.keys().forEach(requireContext);
 try {
   importAll(require.context('../assets/icons', true, /\.svg$/));
 } catch (err) {
