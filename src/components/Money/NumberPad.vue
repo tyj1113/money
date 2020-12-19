@@ -1,34 +1,71 @@
 <template>
   <div class="numberPad">
-    <div class="numberInput">100</div>
+    <div class="numberInput">{{ numberInput }}</div>
     <div class="buttons">
-      <button>1</button>
-      <button>2</button>
-      <button>3</button>
-      <button>删除</button>
-      <button>4</button>
-      <button>5</button>
-      <button>6</button>
-      <button>清空</button>
-      <button>7</button>
-      <button>8</button>
-      <button>9</button>
-      <button>0</button>
-      <button>.</button>
-      <button>ok</button>
+      <button @click="inputContent">1</button>
+      <button @click="inputContent">2</button>
+      <button @click="inputContent">3</button>
+      <button @click="remove">删除</button>
+      <button @click="inputContent">4</button>
+      <button @click="inputContent">5</button>
+      <button @click="inputContent">6</button>
+      <button @click="clear">清空</button>
+      <button @click="inputContent">7</button>
+      <button @click="inputContent">8</button>
+      <button @click="inputContent">9</button>
+      <button @click="inputContent">0</button>
+      <button @click="inputContent">.</button>
+      <button @click="ok">ok</button>
     </div>
 
   </div>
 </template>
 
 <script lang="ts">
-export default {
-  name: 'NumberPad'
-};
+import Vue from 'vue';
+import {Component} from 'vue-property-decorator';
+
+@Component
+export default class NumberPad extends Vue {
+  numberInput: string = '0';
+
+  inputContent(event: MouseEvent) {
+    const button = event.target as HTMLButtonElement, input = button.textContent!
+        , length = this.numberInput.length;
+    if (length === 16) {return;}
+    if (input === '.' && this.numberInput.includes('.')) {return;}
+    if (this.numberInput === '0') {
+      if ('0123456789'.includes(input)) {
+        this.numberInput = input;
+      } else {
+        this.numberInput += input;
+      }
+      return;
+    }
+    this.numberInput += input;
+  }
+
+  remove() {
+    if (this.numberInput.length === 1) {
+      this.numberInput = '0';
+      return;
+    }
+    this.numberInput = this.numberInput.slice(0, -1);
+  }
+
+  clear() {
+    this.numberInput = '0';
+  }
+
+  ok() {
+    return;
+  }
+}
 </script>
 
 <style lang="scss" scoped>
 @import "~@/assets/style/helper.scss";
+
 .numberPad {
   .numberInput {
     @extend %innerShadow;
@@ -36,7 +73,7 @@ export default {
     font-size: 36px;
     font-family: Consolas, monospace;
     padding: 9px 16px;
-
+    height: 72px;
   }
 
   .buttons {
