@@ -1,50 +1,48 @@
 <template>
   <div class="tags">
     <div class="new">
-      <button>新增标签</button>
+      <button @click.a="create">新增标签</button>
     </div>
     <ul class="current">
-      <li>衣</li>
-      <li>食</li>
-      <li>住</li>
-      <li>行</li>
-
-      <li>衣</li>
-      <li>食</li>
-      <li>住</li>
-      <li>行</li>
-      <li>衣</li>
-      <li>食</li>
-      <li>住</li>
-      <li>行</li>
-      <li>衣</li>
-      <li>食</li>
-      <li>住</li>
-      <li>行</li>
-      <li>衣</li>
-      <li>食</li>
-      <li>住</li>
-      <li>行</li>
-      <li>衣</li>
-      <li>食</li>
-      <li>住</li>
-      <li>行</li>
-      <li>衣</li>
-      <li>食</li>
-      <li>住</li>
-      <li>行</li>
-      <li>衣</li>
-      <li>食</li>
-      <li>住</li>
-      <li>行</li>
+      <li v-for="tag in dataSource" :key="tag"
+          :class="selectedTags.includes(tag) && 'selected'"
+          @click="selected(tag)"
+      >{{ tag }}
+      </li>
     </ul>
 
   </div>
 </template>
 
 <script lang="ts">
-export default {
-name: "Tags"
+import Vue from 'vue';
+import {Component, Prop} from 'vue-property-decorator';
+
+@Component
+export default class Tags extends Vue {
+  @Prop(Array) dataSource: string[] | undefined;
+  selectedTags: string[] = [];
+
+  selected(tag: string) {
+    const index: number = this.selectedTags.indexOf(tag);
+    if (index !== -1) {
+      this.selectedTags.splice(index, 1);
+    } else {
+      this.selectedTags.push(tag!);
+    }
+  }
+
+  create() {
+    const tag = window.prompt('输入标签名');
+    if (tag !== '') {
+      if (this.dataSource) {
+        this.$emit('update:dataSource', [...this.dataSource, tag]);
+      }
+    } else {
+      window.alert('无效参数');
+    }
+  }
+
 }
 </script>
 
@@ -55,9 +53,11 @@ name: "Tags"
   flex-grow: 1;
   display: flex;
   flex-direction: column-reverse;
+
   > .current {
     display: flex;
     flex-wrap: wrap;
+
     li {
       $bg: #d9d9d9;
       background: $bg;
@@ -69,6 +69,7 @@ name: "Tags"
       justify-content: center;
       align-items: center;
       margin-top: 4px;
+
       &.selected {
         background: darken($bg, 50%);
         color: white;
