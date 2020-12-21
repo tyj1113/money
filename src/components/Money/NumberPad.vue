@@ -1,6 +1,6 @@
 <template>
   <div class="numberPad">
-    <div class="numberInput">{{ numberInput }}</div>
+    <div class="numberInput">{{ output }}</div>
     <div class="buttons">
       <button @click="inputContent">1</button>
       <button @click="inputContent">2</button>
@@ -23,42 +23,44 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import {Component} from 'vue-property-decorator';
+import {Component, Prop} from 'vue-property-decorator';
 
 @Component
 export default class NumberPad extends Vue {
-  numberInput: string = '0';
-
+  @Prop(Number) value!: number
+output=this.value.toString()
   inputContent(event: MouseEvent) {
     const button = event.target as HTMLButtonElement, input = button.textContent!
-        , length = this.numberInput.length;
+        , length = this.output.length;
     if (length === 16) {return;}
-    if (input === '.' && this.numberInput.includes('.')) {return;}
-    if (this.numberInput === '0') {
+    if (input === '.' && this.output.includes('.')) {return;}
+    if (this.output === '0') {
       if ('0123456789'.includes(input)) {
-        this.numberInput = input;
+        this.output = input;
       } else {
-        this.numberInput += input;
+        this.output += input;
       }
       return;
     }
-    this.numberInput += input;
+    this.output += input;
   }
 
   remove() {
-    if (this.numberInput.length === 1) {
-      this.numberInput = '0';
+    if (this.output.length === 1) {
+      this.output = '0';
       return;
     }
-    this.numberInput = this.numberInput.slice(0, -1);
+    this.output = this.output.slice(0, -1);
   }
 
   clear() {
-    this.numberInput = '0';
+    this.output = '0';
   }
 
   ok() {
-    return;
+    this.$emit('update:value',parseFloat(this.output))
+    this.$emit('submit');
+    this.output = '0';
   }
 }
 </script>
