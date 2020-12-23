@@ -1,15 +1,65 @@
 <template>
-  <div><Layout>Labels</Layout></div>
+  <div>
+    <Layout>
+      <div class="tags">
+        <router-link class="tag" v-for="tag in tags" :key="tag.id" :to="`/labels/tag/${tag.id}`">
+          <span>{{ tag.name }}</span>
+          <Icon name="right"/>
+        </router-link>
+      </div>
+      <div class="createTag-wrapper">
+        <button class="createTag">新建标签</button>
+      </div>
+    </Layout>
+  </div>
 
 
 </template>
 
 <script lang="ts">
-export default {
-name: "Labels"
+import Vue from 'vue';
+import {Component} from 'vue-property-decorator';
+import tagListModel from '@/models/tagListModel';
+
+
+@Component
+export default class Labels extends Vue {
+  tags = tagListModel.fetch();
 }
 </script>
 
 <style lang="scss" scoped>
-
+  .tags{
+    background: white;
+    font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    padding-left: 16px;
+    .tag{
+      display: flex;
+      justify-content: space-between;
+      min-height: 44px;
+      align-items: center;
+      border-bottom: 1px solid #ccc;
+      svg{
+        width: 18px;
+        height: 18px;
+        color: #666;
+        margin-right: 16px;
+      }
+    }
+  }
+  .createTag{
+    background: #767676;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    height: 40px;
+    padding: 0 16px;
+    &-wrapper{
+      text-align: center;
+      padding: 16px;
+      margin-top: 44-16px;
+    }
+  }
 </style>
