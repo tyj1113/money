@@ -38,7 +38,10 @@ export default class Tags extends Vue {
   create() {
     const tag = window.prompt('输入标签名');
     if (tag !== '' && tag!== ' ') {
-      tagListModel.create(tag)
+      const message = tagListModel.create(tag);
+      if (message === 'duplicated') {
+        window.alert('标签名重复了');
+      }
     } else {
       window.alert('无效参数');
     }
@@ -54,7 +57,7 @@ export default class Tags extends Vue {
   flex-grow: 1;
   display: flex;
   flex-direction: column-reverse;
-
+  background: #fff;
   > .current {
     display: flex;
     flex-wrap: wrap;
