@@ -18,6 +18,7 @@ import NumberPad from '@/components/Money/NumberPad.vue';
 import Vue from 'vue';
 import {Component, Watch} from 'vue-property-decorator';
 import recordListModel from '@/models/recordListModel';
+import tagListModel from '@/models/tagListModel';
 
 
 @Component({components: {NumberPad, Types, Notes, Tags}})
@@ -30,7 +31,7 @@ export default class Money extends Vue {
     amount: 0,
     createAt: new Date(0)
   };
-  tags: string[] = ['衣', '食', '住', '行'];
+  tags=tagListModel.fetch()
 
   updateTags(tags: string[]) {
     this.record.tags = tags;

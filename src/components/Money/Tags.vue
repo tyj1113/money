@@ -1,13 +1,13 @@
 <template>
   <div class="tags">
     <div class="new">
-      <button @click.a="create">新增标签</button>
+      <button @click="create">新增标签</button>
     </div>
     <ul class="current">
-      <li v-for="tag in dataSource" :key="tag"
-          :class="selectedTags.includes(tag) && 'selected'"
-          @click="selected(tag)"
-      >{{ tag }}
+      <li v-for="tag in dataSource" :key="tag.id"
+          :class="selectedTags.includes(tag.name) && 'selected'"
+          @click="selected(tag.name)"
+      >{{ tag.name }}
       </li>
     </ul>
 
@@ -17,28 +17,28 @@
 <script lang="ts">
 import Vue from 'vue';
 import {Component, Prop} from 'vue-property-decorator';
+import tagListModel from '@/models/tagListModel';
 
+tagListModel.fetch()
 @Component
 export default class Tags extends Vue {
   @Prop(Array) dataSource: string[] | undefined;
   selectedTags: string[] = [];
 
-  selected(tag: string) {
-    const index: number = this.selectedTags.indexOf(tag);
+  selected(tagName: string) {
+    const index: number = this.selectedTags.indexOf(tagName);
     if (index !== -1) {
       this.selectedTags.splice(index, 1);
     } else {
-      this.selectedTags.push(tag!);
+      this.selectedTags.push(tagName!);
     }
     this.$emit('value',this.selectedTags)
   }
 
   create() {
     const tag = window.prompt('输入标签名');
-    if (tag !== '') {
-      if (this.dataSource) {
-        this.$emit('update:dataSource', [...this.dataSource, tag]);
-      }
+    if (tag !== '' && tag!== ' ') {
+      tagListModel.create(tag)
     } else {
       window.alert('无效参数');
     }
