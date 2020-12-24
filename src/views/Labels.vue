@@ -9,7 +9,6 @@
       </div>
       <div class="createTag-wrapper">
         <Button  @click.native="createTag">新建标签</Button>
-<!--        <button class="createTag" @click="createTag">新建标签</button>-->
       </div>
     </Layout>
   </div>
