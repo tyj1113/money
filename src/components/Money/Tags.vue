@@ -37,7 +37,7 @@ export default class Tags extends Vue {
 
   create() {
     const tag = window.prompt('输入标签名');
-    if (tag !== '' && tag!== ' ') {
+    if (tag !== '' && tag!== ' ' && tag) {
       const message = tagListModel.create(tag);
       if (message === 'duplicated') {
         window.alert('标签名重复了');
