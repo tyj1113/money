@@ -11,9 +11,9 @@ import {Component, Prop} from 'vue-property-decorator';
 
 @Component
 export default class FormItem extends Vue {
-  @Prop(String) title: string;
-  @Prop(String) value: string;
-  @Prop(String) placeholder: string;
+  @Prop(String) title?: string;
+  @Prop(String) value?: string;
+  @Prop(String) placeholder?: string;
 
   onValueChanged(value: string) {
     this.$emit('update:value', value);
@@ -24,13 +24,11 @@ export default class FormItem extends Vue {
 <style lang="scss" scoped>
 .formItem {
   font-size: 14px;
-  display: flex;
-  align-items: center;
   padding-left: 16px;
 
   input {
     padding-left: 16px;
-    height: 64px;
+    height: 40px;
     flex-grow: 1;
     border: none;
     background: transparent;
