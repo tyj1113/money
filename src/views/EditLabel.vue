@@ -1,19 +1,19 @@
 <template>
   <div>
     <div class="topNav">
-      <Icon name="left"/>
+      <Icon name="left" @click.native="goBack"/>
       <span>编辑标签</span>
       <div class="right"></div>
     </div>
     <div class="form-wrapper">
-      <FormItem title="标签名" value="" placeholder="请输入标签名"/>
+      <FormItem @update:value="updateTag" title="标签名" :value="tag.name" placeholder="请输入标签名"/>
     </div>
     <div class="button-wrapper">
-      <Button  >删除标签</Button>
+      <Button @click.native="remove">删除标签</Button>
     </div>
 
 
-</div>
+  </div>
 
 </template>
 
@@ -22,35 +22,81 @@ import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 import FormItem from '@/components/Money/FormItem.vue';
 import Button from '@/components/Button.vue';
+import tagListModel from '@/models/tagListModel';
+
 @Component({
-  components: {FormItem,Button}
+  components: {FormItem, Button}
 })
 export default class EditLabel extends Vue {
+  tag?: {
+    id: string;
+    name: string;
+  } = undefined;
+
+  created() {
+    const id = this.$route.params.id;
+    tagListModel.fetch();
+    const tags = tagListModel.data;
+    const tag = tags.find(item => item.id === id);
+    if (tag) {
+      this.tag = tag;
+    } else {
+      this.$router.replace('/404');
+    }
+  }
+
+  goBack() {
+    this.$router.replace('/labels');
+  }
+
+  remove() {
+    if (this.tag) {
+      if(tagListModel.remove(this.tag)){
+        this.$router.replace('/labels');
+      }else{
+        window.alert('删除失败');
+      }
+
+    }
+  }
+
+  updateTag(name: string) {
+    if(name==='' || name.trim()==='') return window.alert('标签名不能为空或纯空格')
+    if(this.tag){
+      tagListModel.update(this.tag.id,name)
+
+    }
+  }
+
 
 }
 </script>
 
 <style lang="scss" scoped>
-.topNav{
+.topNav {
   font-size: 16px;
   padding: 12px 16px;
   display: flex;
   justify-content: space-around;
   align-items: center;
   background: #fff;
-  svg{
+
+  svg {
     width: 24px;
     height: 24px;
   }
-  .right{
+
+  .right {
     width: 24px;
     height: 24px;
   }
 }
-.form-wrapper{
+
+.form-wrapper {
   background: #fff;
   margin-top: 8px;
 }
+
 .button-wrapper {
   text-align: center;
   padding: 16px;
