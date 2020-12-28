@@ -19,7 +19,8 @@ import Vue from 'vue';
 import {Component, Prop} from 'vue-property-decorator';
 import tagListModel from '@/models/tagListModel';
 
-tagListModel.fetch()
+
+
 @Component
 export default class Tags extends Vue {
   @Prop(Array) dataSource: string[] | undefined;

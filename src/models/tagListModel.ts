@@ -50,4 +50,5 @@ const tagListModel: TagListModel = {
     return 'success';
   }
 };
+tagListModel.fetch()
 export default tagListModel;
