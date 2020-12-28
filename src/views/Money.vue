@@ -17,17 +17,13 @@ import FormItem from '@/components/Money/FormItem.vue';
 import Types from '@/components/Money/Types.vue';
 import NumberPad from '@/components/Money/NumberPad.vue';
 import Vue from 'vue';
-import {Component, Watch} from 'vue-property-decorator';
-import recordListModel from '@/models/recordListModel';
+import {Component} from 'vue-property-decorator';
 import tagListModel from '@/models/tagListModel';
-
-const recordList = recordListModel.fetch();
 
 
 @Component({components: {NumberPad, Types, FormItem, Tags}})
 export default class Money extends Vue {
-  recordList: RecordItem[] = recordList;
-  tags=tagListModel.data
+  tags = tagListModel.data;
   record: RecordItem = {
     tags: [],
     notes: '',
@@ -36,10 +32,12 @@ export default class Money extends Vue {
     createAt: new Date(0)
   };
 
+  created() {
+    this.$store.commit('fetchRecords');
+  }
 
   updateTags(value: string[]) {
     this.record.tags = value;
-
   }
 
   onUpdateNotes(note: string) {
@@ -47,16 +45,8 @@ export default class Money extends Vue {
   }
 
   saveRecord() {
-    const newRecord: RecordItem = recordListModel.clone(this.record);
-    newRecord.createAt = new Date();
-    this.recordList.push(newRecord);
+    this.$store.commit('saveRecords', this.record);
   }
-
-  @Watch('recordList')
-  onRecordListChanged() {
-    recordListModel.save(this.recordList);
-  }
-
 
 }
 </script>
