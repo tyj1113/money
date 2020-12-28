@@ -22,7 +22,6 @@ import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 import FormItem from '@/components/Money/FormItem.vue';
 import Button from '@/components/Button.vue';
-import tagListModel from '@/models/tagListModel';
 
 @Component({
   components: {FormItem, Button}
@@ -35,8 +34,8 @@ export default class EditLabel extends Vue {
 
   created() {
     const id = this.$route.params.id;
-    tagListModel.fetch();
-    const tags = tagListModel.data;
+    this.$store.commit('fetchTags');
+    const tags = this.$store.state.tagList;
     const tag = tags.find(item => item.id === id);
     if (tag) {
       this.tag = tag;
@@ -51,20 +50,16 @@ export default class EditLabel extends Vue {
 
   remove() {
     if (this.tag) {
-      if(tagListModel.remove(this.tag)){
-        this.$router.replace('/labels');
-      }else{
-        window.alert('删除失败');
-      }
-
+      this.$store.commit('removeTags',this.tag);
+    } else {
+      window.alert('删除失败');
     }
   }
 
   updateTag(name: string) {
-    if(name==='' || name.trim()==='') return window.alert('标签名不能为空或纯空格')
-    if(this.tag){
-      tagListModel.update(this.tag.id,name)
-
+    if (name === '' || name.trim() === '') return window.alert('标签名不能为空或纯空格');
+    if (this.tag) {
+      this.$store.commit('updateTagName',{id:this.tag.id, name});
     }
   }
 

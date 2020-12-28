@@ -1,10 +1,10 @@
 <template>
   <div class="tags">
     <div class="new">
-      <button @click="create">新增标签</button>
+      <button @click="createTag">新增标签</button>
     </div>
     <ul class="current">
-      <li v-for="tag in dataSource" :key="tag.id"
+      <li v-for="tag in tags" :key="tag.id"
           :class="selectedTags.includes(tag.name) && 'selected'"
           @click="selected(tag.name)"
       >{{ tag.name }}
@@ -15,16 +15,20 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import {Component, Prop} from 'vue-property-decorator';
-import tagListModel from '@/models/tagListModel';
 
-
+import {Component} from 'vue-property-decorator';
+import {TagCreate} from '@/mixins/TagCreate';
 
 @Component
-export default class Tags extends Vue {
-  @Prop(Array) dataSource: string[] | undefined;
+export default class Tags extends TagCreate {
+  get tags() {
+    return this.$store.state.tagList;
+  }
   selectedTags: string[] = [];
+
+  created() {
+    this.$store.commit('fetchTags');
+  }
 
   selected(tagName: string) {
     const index: number = this.selectedTags.indexOf(tagName);
@@ -33,24 +37,12 @@ export default class Tags extends Vue {
     } else {
       this.selectedTags.push(tagName!);
     }
-    this.$emit('value',this.selectedTags)
+    this.$store.commit('selectedTagsUpdate',this.selectedTags)
   }
 
-  create() {
-    const tag = window.prompt('输入标签名');
-    if (tag !== '' && tag!== ' ' && tag) {
-      const message = tagListModel.create(tag);
-      if (message === 'duplicated') {
-        window.alert('标签名重复了');
-      }
-    } else {
-      window.alert('无效参数');
-    }
-  }
 
 }
 </script>
-
 <style lang="scss" scoped>
 .tags {
   font-size: 14px;
@@ -59,6 +51,7 @@ export default class Tags extends Vue {
   display: flex;
   flex-direction: column-reverse;
   background: #fff;
+
   > .current {
     display: flex;
     flex-wrap: wrap;
