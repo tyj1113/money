@@ -1,6 +1,6 @@
 <template>
   <label class="formItem">
-    <span>{{ this.title }}</span>
+    <span class="note">{{ this.title }}</span>
     <input type="text" :placeholder="placeholder" :value="value" @input="onValueChanged($event.target.value)">
   </label>
 </template>
@@ -26,13 +26,17 @@ export default class FormItem extends Vue {
 .formItem {
   font-size: 14px;
   padding-left: 16px;
-
+  display: flex;
+  align-items: center;
+  .note{
+    padding-right: 16px;
+  }
   input {
-    padding-left: 16px;
     height: 40px;
     flex-grow: 1;
-    border: none;
     background: transparent;
+    border: none;
+    padding-right: 16px;
   }
 }
 </style>
