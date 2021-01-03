@@ -36,7 +36,10 @@ export default class EditLabel extends Vue {
     const id = this.$route.params.id;
     this.$store.commit('fetchTags');
     const tags = this.$store.state.tagList;
-    const tag = tags.find(item => item.id === id);
+    const tag = tags.find((item: {
+      id: string;
+      name: string;
+    }) => item.id === id);
     if (tag) {
       this.tag = tag;
     } else {
