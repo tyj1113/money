@@ -17,3 +17,8 @@ type TagListModel = {
   remove: (tag: Tag) => boolean;
   update: (id: string,name: string) => 'success' | 'not found';
 }
+type RootState={
+  recordList:  RecordItem[];
+  tagList:  Tag[];
+  selectTags: [];
+}
