@@ -46,6 +46,7 @@ export default class Statistics extends Vue {
   get groupList() {
     const {recordList} = this;
     const newList = clone(recordList).filter(r => r.type === this.type).sort((a, b) => dayjs(b.createAt).valueOf() - dayjs(a.createAt).valueOf());
+    if(newList.length===0) return []
     type Result = { title: string; total: number; items: RecordItem[] }[]
     const result: Result = [
       {
