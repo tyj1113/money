@@ -10,7 +10,9 @@ const store = new Vuex.Store({
   state: {
     recordList: [] ,
     tagList: [] ,
-    selectTags: []
+    selectedTags: [],
+    createTagError:null,
+    createRecordError:null,
   } as RootState,
   mutations: {
     fetchRecords(state) {
@@ -24,11 +26,19 @@ const store = new Vuex.Store({
     },
     fetchTags(state) {
       state.tagList = JSON.parse(window.localStorage.getItem('tagList') || '[]');
+      if(state.tagList.length===0){
+        store.commit('createTag','衣')
+        store.commit('createTag','食')
+        store.commit('createTag','住')
+        store.commit('createTag','行')
+      }
     },
     createTag(state, name) {
+      state.createTagError=null
       const tags = state.tagList.map(item => item.name);
       if (tags.includes(name)) {
-        window.alert('标签名重复了');
+        state.createTagError=new Error('标签名重复了')
+        return
       } else {
         const id = createId().toString();
         state.tagList.push({id, name});
@@ -65,7 +75,10 @@ const store = new Vuex.Store({
       }
     },
     selectedTagsUpdate(state, tags) {
-      state.selectTags = tags;
+      state.selectedTags = tags;
+    },
+    selectedTagsClear(state) {
+      state.selectedTags = [];
     }
   },
   actions: {},
