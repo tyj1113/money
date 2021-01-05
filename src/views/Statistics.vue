@@ -2,7 +2,7 @@
   <div>
     <Layout>
       <Types :value.sync="type" class-prefix="type"/>
-      <ol>
+      <ol v-if="groupList.length!==0">
         <li v-for="group in groupList" :key="group.title">
           <h3 class="title">{{ dateFormat(group.title) }}<span>￥{{ group.total }}</span></h3>
           <ol>
@@ -14,7 +14,9 @@
           </ol>
         </li>
       </ol>
-
+      <div v-else class="noRecord">
+        没有相关记录
+      </div>
 
     </Layout>
   </div>
@@ -82,7 +84,6 @@ export default class Statistics extends Vue {
 
   dateFormat(date: string) {
     const today = new Date();
-    console.log(dayjs(date));
     if (dayjs(today).isSame(dayjs(date), 'day')) {
       return '今天';
     } else if (dayjs(today).subtract(1, 'day').isSame(dayjs(date), 'day')) {
@@ -130,6 +131,10 @@ export default class Statistics extends Vue {
     margin-left: 16px;
     color: #999;
   }
+}
+.noRecord{
+  text-align: center;
+  margin: 50px auto 0;
 }
 </style>
 
