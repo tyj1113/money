@@ -24,7 +24,9 @@ export default class Tags extends TagCreate {
   get tags() {
     return this.$store.state.tagList;
   }
-  selectedTags: string[] = [];
+  get selectedTags(){
+    return this.$store.state.selectedTags
+  }
 
   created() {
     this.$store.commit('fetchTags');
@@ -35,7 +37,7 @@ export default class Tags extends TagCreate {
     if (index !== -1) {
       this.selectedTags.splice(index, 1);
     } else {
-      this.selectedTags.push(tagName!);
+      this.selectedTags.push(tagName);
     }
     this.$store.commit('selectedTagsUpdate',this.selectedTags)
   }
