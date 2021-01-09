@@ -3,10 +3,10 @@
     <Layout>
       <Types :value.sync="type" class-prefix="type"/>
       <ol v-if="groupList.length!==0">
-        <li v-for="group in groupList" :key="group.title">
+        <li v-for="(group,index) in groupList" :key="index">
           <h3 class="title">{{ dateFormat(group.title) }}<span>￥{{ group.total }}</span></h3>
           <ol>
-            <li class="record" v-for="item in group.items" :key="item.createAt">
+            <li class="record" v-for="(item,index) in group.items" :key="index">
               <span>{{ tagFormat(item.tags) }}</span>
               <span class="note">{{ item.notes }}</span>
               <span>￥{{ item.amount }}</span>
