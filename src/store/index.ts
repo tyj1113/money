@@ -20,7 +20,7 @@ const store = new Vuex.Store({
     },
     saveRecords(state, record) {
       const newRecord: RecordItem = clone(record);
-      newRecord.createAt = new Date();
+      newRecord.createAt = newRecord.createAt|| new Date().toISOString();
       state.recordList.push(newRecord);
       window.localStorage.setItem('recordList', JSON.stringify(state.recordList));
     },
