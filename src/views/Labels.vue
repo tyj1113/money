@@ -3,8 +3,11 @@
     <Layout>
       <div class="tags">
         <router-link class="tag" v-for="tag in tags" :key="tag.id" :to="`/labels/edit/${tag.id}`">
-          <span>{{ tag.name }}</span>
-          <Icon name="right"/>
+          <div class="icon-wrapper">
+            <Icon :name="tag.iconName" class=""></Icon>
+            {{ tag.name }}
+          </div>
+          <Icon name="right" class="right"/>
         </router-link>
       </div>
       <div class="createTag-wrapper">
@@ -43,19 +46,27 @@ export default class Labels extends TagCreate {
   display: flex;
   flex-direction: column;
   padding-left: 16px;
-
   .tag {
     display: flex;
     justify-content: space-between;
-    min-height: 44px;
+    min-height: 54px;
     align-items: center;
     border-bottom: 1px solid #ccc;
-
-    svg {
+  .icon-wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+    ::v-deep svg{
+      margin: 0 20px;
+      font-size: 32px;
+      color:#ccc
+    }
+    .right svg {
       width: 18px;
       height: 18px;
       color: #666;
-      margin-right: 16px;
+      margin: 0 16px 0 0;
     }
   }
 }

@@ -1,14 +1,16 @@
 <template>
   <div class="tags">
-    <div class="new">
-      <button @click="createTag">新增标签</button>
-    </div>
     <ul class="current">
       <li v-for="tag in tags" :key="tag.id"
-          :class="selectedTags.includes(tag.name) && 'selected'"
-          @click="selected(tag.name)"
-      >{{ tag.name }}
+          :class="selectedTag===tag.name && 'selected'"
+          @click="selected({tagName:tag.name,iconName:tag.iconName})"
+      >
+        <span class="iconWrapper">  <Icon :name="tag.iconName"/></span>
+        <span>{{ tag.name }}</span>
       </li>
+      <li @click="createTag">
+        <span class="iconWrapper">  <Icon name="bianji"/></span>
+        <span>编辑</span></li>
     </ul>
 
   </div>
@@ -24,30 +26,23 @@ export default class Tags extends TagCreate {
   get tags() {
     return this.$store.state.tagList;
   }
-  get selectedTags(){
-    return this.$store.state.selectedTags
+
+  get selectedTag() {
+    return this.$store.state.selectedTag;
   }
 
   created() {
     this.$store.commit('fetchTags');
   }
 
-  selected(tagName: string) {
-    const index: number = this.selectedTags.indexOf(tagName);
-    if (index !== -1) {
-      this.selectedTags.splice(index, 1);
-    } else {
-      this.selectedTags.push(tagName);
-    }
-    this.$store.commit('selectedTagsUpdate',this.selectedTags)
+  selected({tagName,iconName}) {
+    this.$store.commit('selectedTagUpdate', tagName);
   }
-
-
 }
 </script>
 <style lang="scss" scoped>
 .tags {
-  font-size: 14px;
+  font-size: 12px;
   padding: 16px;
   flex-grow: 1;
   display: flex;
@@ -56,23 +51,36 @@ export default class Tags extends TagCreate {
 
   > .current {
     display: flex;
-    flex-wrap: wrap;
-
+    overflow: auto;
+    &::-webkit-scrollbar{
+      display: none;
+    }
     li {
-      $bg: #d9d9d9;
-      background: $bg;
-      height: 24px;
-      border-radius: 12px;
-      margin-right: 12px;
-      padding: 0 16px;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      margin-top: 4px;
+      margin-right: 12px;
+
+      .iconWrapper {
+        border-radius: 24px;
+        padding: 12px;
+        display: flex;
+        background: #ccc;
+        justify-content: center;
+      }
+
+      svg {
+        color: white;
+        font-size: 24px;
+      }
 
       &.selected {
-        background: darken($bg, 50%);
-        color: white;
+        color: black;
+
+        .iconWrapper {
+          background: #fd9a0c;
+        }
       }
     }
   }
