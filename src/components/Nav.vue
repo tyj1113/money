@@ -26,9 +26,8 @@ export default {
 nav {
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
   display: flex;
-  //flex-direction: row;
   font-size: 12px;
-
+background: white;
   > .item {
     width: 33.3333%;
     padding: 2px 0;
@@ -36,16 +35,13 @@ nav {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-
     .icon {
       width: 32px;
       height: 32px;
     }
-
   }
-
   .item.selected {
-    color: red;
+    color:#fd9a0c;
   }
 }
 </style>

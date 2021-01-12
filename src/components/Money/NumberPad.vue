@@ -74,57 +74,61 @@ output=this.value.toString()
     text-align: right;
     font-size: 36px;
     font-family: Consolas, monospace;
-    padding: 9px 16px;
-    height: 72px;
+    padding: 0 9px;
+    height: 54px;
+    background: #fff;
   }
 
   .buttons {
     position: relative;
-
+  background: #ececed;
     button {
-      width: 25%;
-      height: 64px;
+      margin: 0.5% 0.5% 0.5% 0.5%;
+      width: 24%;
+      height: 48px;
       border: none;
-      background: transparent;
+      background: #fff;
+      border-radius: 5px;
     }
 
-    $bg: #f2f2f2;;
+    //$bg: #fff;
+    //
+    //:nth-child(1) {
+    //  background: $bg;
+    //}
 
-    :nth-child(1) {
-      background: $bg;
-    }
+    //:nth-child(2), :nth-child(5) {
+    //  background: darken($bg, 3%);
+    //}
+    //
+    //:nth-child(3), :nth-child(6), :nth-child(9) {
+    //  background: darken($bg, 9%);
+    //}
 
-    :nth-child(2), :nth-child(5) {
-      background: darken($bg, 3%);
-    }
-
-    :nth-child(3), :nth-child(6), :nth-child(9) {
-      background: darken($bg, 9%);
-    }
-
-    :nth-child(4), :nth-child(7), :nth-child(10) {
-      background: darken($bg, 12%);
-    }
-
-    :nth-child(8), :nth-child(11) {
-      background: darken($bg, 15%);
-    }
+    //:nth-child(4), :nth-child(7), :nth-child(10) {
+    //  background: darken($bg, 12%);
+    //}
+    //
+    //:nth-child(8), :nth-child(11) {
+    //  background: darken($bg, 15%);
+    //}
 
     :nth-child(12) {
-      background: darken($bg, 15%);
-      width: 50%;
+      //background: darken($bg, 15%);
+      width: 49%;
+
     }
 
     :nth-child(13) {
-      background: darken($bg, 18%);
+
     }
 
     :nth-child(14) {
-      height: 128px;
+      height: 100px;
       position: absolute;
       bottom: 0;
       right: 0;
-      background: darken($bg, 21%);
+      //background: darken($bg, 21%);
     }
 
   }

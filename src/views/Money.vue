@@ -2,12 +2,12 @@
   <div>
     <Layout classPrefix="layout">
       <NumberPad :value.sync="record.amount" @submit="saveRecord"/>
-      <Types :value.sync="record.type"/>
       <div class="notes">
         <FormItem :value.sync="record.notes" placeholder="在这里添加备注" title="备注"  />
-        <FormItem :value.sync="record.createAt" placeholder="在这里输入日期" title="日期"  type="date"/>
       </div>
+      <FormItem :value.sync="record.createAt" placeholder="在这里输入日期" title="日期"  type="date"/>
       <Tags/>
+          <Types :value.sync="record.type"/>
     </Layout>
   </div>
 </template>
@@ -56,8 +56,9 @@ export default class Money extends Vue {
   display: flex;
   flex-direction: column-reverse;
 }
-
-.notes {
-  padding: 12px 0;
+.typesWrapper{
+  display: flex;
+  justify-content: center;
+  background: #fd9a0c;
 }
 </style>

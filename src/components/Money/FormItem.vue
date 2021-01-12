@@ -36,6 +36,7 @@ export default class FormItem extends Vue {
   padding-left: 16px;
   display: flex;
   align-items: center;
+  background: #fff;
   .note{
     padding-right: 16px;
   }
