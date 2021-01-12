@@ -169,17 +169,6 @@ export default class Statistics extends Vue {
 </script>
 
 <style lang="scss" scoped>
-::v-deep .type-item {
-  background: #C4C4C4;
-
-  &.selected {
-    background: white;
-
-    &::after {
-      display: none;
-    }
-  }
-}
 
 %item {
   display: flex;
