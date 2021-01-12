@@ -8,6 +8,7 @@ type RecordItem = {
 type Tag = {
   id: string;
   name: string;
+  iconName: string;
 }
 type TagListModel = {
   data: Tag[];
@@ -20,7 +21,7 @@ type TagListModel = {
 type RootState={
   recordList:  RecordItem[];
   tagList:  Tag[];
-  selectedTags: [];
+  selectedTag: string;
   createTagError: Error | null;
   createRecordError: Error | null;
 }

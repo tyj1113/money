@@ -10,7 +10,7 @@ const store = new Vuex.Store({
   state: {
     recordList: [] ,
     tagList: [] ,
-    selectedTags: [],
+    selectedTag: '',
     createTagError:null,
     createRecordError:null,
   } as RootState,
@@ -41,7 +41,7 @@ const store = new Vuex.Store({
         return
       } else {
         const id = createId().toString();
-        state.tagList.push({id, name});
+        state.tagList.push({id, name,iconName:'shopping'});
         store.commit('saveTags');
       }
     },
@@ -74,11 +74,12 @@ const store = new Vuex.Store({
         window.alert('not found');
       }
     },
-    selectedTagsUpdate(state, tags) {
-      state.selectedTags = tags;
+    selectedTagUpdate(state, tag) {
+      console.log(tag)
+      state.selectedTag = tag;
     },
     selectedTagsClear(state) {
-      state.selectedTags = [];
+      state.selectedTag = '';
     }
   },
   actions: {},
