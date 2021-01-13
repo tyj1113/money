@@ -2,8 +2,8 @@
   <div class="tags">
     <ul class="current" v-if="type==='edit'">
       <li  v-for="tag in tags" :key="tag.id"
-          :class="selectedTag===tag.tagName && 'selected'"
-          @click="selected({tagName:tag.tagName,iconName:tag.iconName})"
+          :class="selectedTag===tag && 'selected'"
+          @click="selected(tag)"
       >
         <span class="iconWrapper">  <Icon :name="tag.iconName"/></span>
         <span >{{ tag.tagName }}</span>
@@ -43,8 +43,8 @@ export default class Tags extends Vue {
     this.$store.commit('fetchTags');
   }
 
-  selected({tagName,iconName}) {
-    this.$store.commit('selectedTagUpdate', tagName);
+  selected(tag) {
+    this.$store.commit('selectedTagUpdate', tag);
   }
   selectedIcon(tag){
     this.$store.commit('selectedTagUpdate', tag);
