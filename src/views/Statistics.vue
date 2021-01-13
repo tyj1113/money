@@ -1,26 +1,11 @@
 <template>
   <div>
     <Layout>
-
       <Types :value.sync="type" class-prefix="type"/>
+      <FormItem type="month" :value="today"/>
+      <Records  :type="type" :groupList="groupList"/>
       <div class="chartWrapper" ref="chartWrapper">
         <Chart :option="chartOption" class="chart"/>
-      </div>
-
-      <ol v-if="groupList.length!==0">
-        <li v-for="(group,index) in groupList" :key="index">
-          <h3 class="title">{{ dateFormat(group.title) }}<span>￥{{ group.total }}</span></h3>
-          <ol>
-            <li class="record" v-for="(item,index) in group.items" :key="index">
-              <span>{{ item.tags }}</span>
-              <span class="note">{{ item.notes }}</span>
-              <span>￥{{ item.amount }}</span>
-            </li>
-          </ol>
-        </li>
-      </ol>
-      <div v-else class="noRecord">
-        没有相关记录
       </div>
 
     </Layout>
@@ -35,14 +20,19 @@ import Types from '@/components/Money/Types.vue';
 import clone from '@/lib/clone';
 import dayjs from 'dayjs';
 import Chart from '@/components/Chart.vue';
+import FormItem from '@/components/Money/FormItem.vue';
+import Records from '@/components/Records.vue';
 
 
 @Component({
-  components: {Chart, Types}
+  components: {Records, FormItem, Chart, Types}
 })
 export default class Statistics extends Vue {
   type = '-';
 
+  get today(){
+    return dayjs(new Date()).format('YYYY-MM')
+  }
   beforeCreate() {
     this.$store.commit('fetchRecords');
   }
@@ -169,38 +159,8 @@ export default class Statistics extends Vue {
 </script>
 
 <style lang="scss" scoped>
-
-%item {
-  display: flex;
-  justify-content: space-between;
-  align-content: center;
-  padding: 8px 16px;
-  line-height: 24px;
-}
-
-.title {
-  @extend %item
-}
-
-.record {
-  @extend %item;
-  background: white;
-
-  .note {
-    margin-right: auto;
-    margin-left: 16px;
-    color: #999;
-  }
-}
-
-.noRecord {
-  text-align: center;
-  margin: 50px auto 0;
-}
-
 .chart {
   width: 430%;
-
   &Wrapper {
     overflow: auto;
   }
