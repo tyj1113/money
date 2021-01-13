@@ -1,18 +1,26 @@
 <template>
   <div>
     <Layout>
-      <div class="tags">
-        <router-link class="tag" v-for="tag in tags" :key="tag.id" :to="`/labels/edit/${tag.id}`">
-          <div class="icon-wrapper">
-            <Icon :name="tag.iconName" class=""></Icon>
-            {{ tag.name }}
-          </div>
+      <div class="tags" >
+        <router-link to="/labels/add" class="tag">
+          新增标签
           <Icon name="right" class="right"/>
         </router-link>
+        <ul>
+          <li class="tag" v-for="tag in tags" :key="tag.id" >
+            <div class="icon-wrapper">
+              <Icon :name="tag.iconName" class=""></Icon>
+              {{ tag.tagName }}
+            </div>
+            <div class="click-wrapper" @click="remove(tag)">
+              <Icon name="lajitong" class-prefix="remove" />
+            </div>
+
+          </li>
+        </ul>
+
       </div>
-      <div class="createTag-wrapper">
-        <Button  @click.native="createTag">新建标签</Button>
-      </div>
+
     </Layout>
   </div>
 
@@ -22,19 +30,29 @@
 <script lang="ts">
 import {Component} from 'vue-property-decorator';
 import Button from '@/components/Button.vue';
-import {TagCreate} from '@/mixins/TagCreate';
+import Vue from 'vue';
+
 
 
 @Component({
   components: {Button}
 })
-export default class Labels extends TagCreate {
+export default class Labels extends Vue {
   get tags() {
     return this.$store.state.tagList;
   }
   created() {
     this.$store.commit('fetchTags');
   }
+  remove(tag: Tag) {
+    const flag=window.confirm('确定要删除该标签吗')
+    if (flag) {
+      this.$store.commit('removeTags',tag);
+    } else {
+      return
+    }
+  }
+
 
 }
 </script>
@@ -57,17 +75,23 @@ export default class Labels extends TagCreate {
     justify-content: center;
     align-items: center;
   }
+
     ::v-deep svg{
       margin: 0 20px;
       font-size: 32px;
       color:#ccc
     }
-    .right svg {
-      width: 18px;
-      height: 18px;
-      color: #666;
-      margin: 0 16px 0 0;
+    ::v-deep .remove-item {
+      font-size: 18px;
     }
+
+    //.right svg {
+    //
+    //  width: 18px;
+    //  height: 18px;
+    //  color: #666;
+    //  margin: 0 16px 0 0;
+    //}
   }
 }
 
@@ -81,8 +105,6 @@ export default class Labels extends TagCreate {
 
   &-wrapper {
     text-align: center;
-    padding: 16px;
-    margin-top: 44-16px;
   }
 }
 </style>

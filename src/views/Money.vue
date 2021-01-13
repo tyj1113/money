@@ -6,7 +6,7 @@
         <FormItem :value.sync="record.notes" placeholder="在这里添加备注" title="备注"  />
       </div>
       <FormItem :value.sync="record.createAt" placeholder="在这里输入日期" title="日期"  type="date"/>
-      <Tags/>
+      <Tags type="edit" :tags="this.$store.state.tagList" />
           <Types :value.sync="record.type"/>
     </Layout>
   </div>
@@ -32,19 +32,19 @@ export default class Money extends Vue {
     amount: 0,
     createAt: dayjs(new Date().toISOString()).format('YYYY-MM-DD')
   };
-  created() {
-    this.$store.commit('fetchRecords');
-  }
+  // created() {
+  //   this.$store.commit('fetchRecords');
+  // }
 
   saveRecord() {
-    this.record.tags=this.$store.state.selectedTags;
+    this.record.tags=this.$store.state.selectedTag;
     if(this.record.tags.length===0){
       return window.alert('请至少选择一个标签')
     }
     this.$store.commit('saveRecords', this.record);
     if(this.$store.state.createRecordError===null){
       window.alert('已保存')
-      this.$store.commit('selectedTagsClear')
+      this.$store.commit('selectedTagClear')
       this.record.notes=''
 
     }

@@ -5,7 +5,7 @@
       <input :type="type || 'text' " :placeholder="placeholder" :value="formatDate(value)" @input="onValueChanged($event.target.value)">
     </template>
     <template v-else>
-      <input :type="type || 'text' " :placeholder="placeholder" :value="value" @input="onValueChanged($event.target.value)">
+      <input maxlength="4" :type="type || 'text' " :placeholder="placeholder" :value="value" @input="onValueChanged($event.target.value)">
     </template>
   </label>
 </template>
