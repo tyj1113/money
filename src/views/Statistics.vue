@@ -12,7 +12,7 @@
           <h3 class="title">{{ dateFormat(group.title) }}<span>￥{{ group.total }}</span></h3>
           <ol>
             <li class="record" v-for="(item,index) in group.items" :key="index">
-              <span>{{ tagFormat(item.tags) }}</span>
+              <span>{{ item.tags }}</span>
               <span class="note">{{ item.notes }}</span>
               <span>￥{{ item.amount }}</span>
             </li>
@@ -149,9 +149,9 @@ export default class Statistics extends Vue {
     return result;
   }
 
-  tagFormat(tags: string[]) {
-    return tags.length === 0 ? '无' : tags.join(',');
-  }
+  // tagFormat(tags: string[]) {
+  //   return tags.length === 0 ? '无' : tags.join(',');
+  // }
 
   dateFormat(date: string) {
     const today = new Date();

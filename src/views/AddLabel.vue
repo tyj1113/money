@@ -2,17 +2,16 @@
   <div>
     <div class="topNav">
       <Icon name="left" @click.native="goBack"/>
-      <span>编辑标签</span>
+      <span>新增标签</span>
       <div class="right"></div>
     </div>
+    <Tags :tags="this.$store.state.allTag"/>
     <div class="form-wrapper">
-      <FormItem @update:value="updateTag" title="标签名" :value="tag.name" placeholder="请输入标签名"/>
+      <FormItem placeholder="请输入标签名最大支持长度为4" :value.sync="tagName"/>
     </div>
     <div class="button-wrapper">
-      <Button @click.native="remove">删除标签</Button>
+      <Button @click.native="createTag">添加标签</Button>
     </div>
-
-
   </div>
 
 </template>
@@ -22,28 +21,35 @@ import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 import FormItem from '@/components/Money/FormItem.vue';
 import Button from '@/components/Button.vue';
+import Tags from '@/components/Money/Tags.vue';
 
 @Component({
-  components: {FormItem, Button}
+  components: {Tags, FormItem, Button}
 })
-export default class EditLabel extends Vue {
-  tag?: {
-    id: string;
-    name: string;
-  } = undefined;
+export default class AddLabel extends Vue {
+  // tag?: {
+  //   id: string;
+  //   name: string;
+  // } = undefined;
+  tagName: string='';
 
-  created() {
-    const id = this.$route.params.id;
-    this.$store.commit('fetchTags');
-    const tags = this.$store.state.tagList;
-    const tag = tags.find((item: {
-      id: string;
-      name: string;
-    }) => item.id === id);
-    if (tag) {
-      this.tag = tag;
+  get iconName() {
+    return this.$store.state.selectedTag;
+  }
+
+  createTag() {
+     const tagName=this.tagName
+    const iconName=this.iconName
+    if (tagName !== '' && tagName.trim() !== '' && tagName) {
+      this.$store.commit('createTag', {tagName,iconName});
+      if (this.$store.state.createTagError) {
+        window.alert(this.$store.state.createTagError.message);
+      } else {
+        window.alert('添加成功');
+        this.$router.replace('/labels');
+      }
     } else {
-      this.$router.replace('/404');
+      window.alert('无效参数');
     }
   }
 
@@ -53,7 +59,7 @@ export default class EditLabel extends Vue {
 
   remove() {
     if (this.tag) {
-      this.$store.commit('removeTags',this.tag);
+      this.$store.commit('removeTags', this.tag);
     } else {
       window.alert('删除失败');
     }
@@ -62,7 +68,7 @@ export default class EditLabel extends Vue {
   updateTag(name: string) {
     if (name === '' || name.trim() === '') return window.alert('标签名不能为空或纯空格');
     if (this.tag) {
-      this.$store.commit('updateTagName',{id:this.tag.id, name});
+      this.$store.commit('updateTagName', {id: this.tag.id, name});
     }
   }
 
@@ -72,6 +78,7 @@ export default class EditLabel extends Vue {
 
 <style lang="scss" scoped>
 .topNav {
+  //color: #ccc;
   font-size: 16px;
   padding: 12px 16px;
   display: flex;

@@ -7,7 +7,7 @@ type RecordItem = {
 }
 type Tag = {
   id: string;
-  name: string;
+  tagName: string;
   iconName: string;
 }
 type TagListModel = {
@@ -24,4 +24,5 @@ type RootState={
   selectedTag: string;
   createTagError: Error | null;
   createRecordError: Error | null;
+  allTag: string [];
 }

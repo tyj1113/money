@@ -2,7 +2,6 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import clone from '@/lib/clone';
 import createId from '@/lib/createId';
-import router from '@/router';
 
 Vue.use(Vuex);
 
@@ -13,6 +12,11 @@ const store = new Vuex.Store({
     selectedTag: '',
     createTagError:null,
     createRecordError:null,
+    allTag:['caipiao','clothes','cosmetics','dian','dianfei','dianqi','eat','feiji',
+      'fenhong','gift','gongzi','hongbao','huwai','jiaju','jiangjin','jianzhi',
+      'jiudian','licai','lvxing','lvyou','maicai','member','movie','pets','phonebill',
+      'rent','riyongpin','seedoctor','shopping','shuifei','shuma','snacks','traffic',
+      'waimai','wine','youxi','yuehui']
   } as RootState,
   mutations: {
     fetchRecords(state) {
@@ -27,21 +31,21 @@ const store = new Vuex.Store({
     fetchTags(state) {
       state.tagList = JSON.parse(window.localStorage.getItem('tagList') || '[]');
       if(state.tagList.length===0){
-        store.commit('createTag','衣')
-        store.commit('createTag','食')
-        store.commit('createTag','住')
-        store.commit('createTag','行')
+        store.commit('createTag',{tagName:'衣',iconName:'clothes'})
+        store.commit('createTag',{tagName:'食',iconName:'eat'})
+        store.commit('createTag',{tagName:'住',iconName:'rent'})
+        store.commit('createTag',{tagName:'行',iconName:'huwai'})
       }
     },
-    createTag(state, name) {
+    createTag(state, {tagName,iconName}) {
       state.createTagError=null
-      const tags = state.tagList.map(item => item.name);
-      if (tags.includes(name)) {
+      const tagsName = state.tagList.map(item => item.tagName);
+      if (tagsName.includes(tagName)) {
         state.createTagError=new Error('标签名重复了')
         return
       } else {
         const id = createId().toString();
-        state.tagList.push({id, name,iconName:'shopping'});
+        state.tagList.push({id,tagName,iconName});
         store.commit('saveTags');
       }
     },
@@ -53,8 +57,6 @@ const store = new Vuex.Store({
       if (index !== -1) {
         state.tagList.splice(index, 1);
         store.commit('saveTags');
-        window.alert('删除成功');
-        router.replace('/labels');
       } else {
         window.alert('删除失败');
       }
@@ -63,11 +65,11 @@ const store = new Vuex.Store({
       const {id, name} = payload;
       const index = state.tagList.findIndex(item => item.id === id);
       if (index !== -1) {
-        const names=state.tagList.map(item=>item.name)
+        const names=state.tagList.map(item=>item.tagName)
         if(names.find(item=> item===name)){
           window.alert('标签名重复了')
         }else{
-          state.tagList[index].name = name;
+          state.tagList[index].tagName = name;
           store.commit('saveTags');
         }
       } else {
@@ -75,10 +77,9 @@ const store = new Vuex.Store({
       }
     },
     selectedTagUpdate(state, tag) {
-      console.log(tag)
       state.selectedTag = tag;
     },
-    selectedTagsClear(state) {
+    selectedTagClear(state) {
       state.selectedTag = '';
     }
   },
