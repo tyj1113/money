@@ -27,21 +27,18 @@ import Tags from '@/components/Money/Tags.vue';
   components: {Tags, FormItem, Button}
 })
 export default class AddLabel extends Vue {
-  // tag?: {
-  //   id: string;
-  //   name: string;
-  // } = undefined;
-  tagName: string='';
+
+  tagName: string = '';
 
   get iconName() {
     return this.$store.state.selectedTag;
   }
 
   createTag() {
-     const tagName=this.tagName
-    const iconName=this.iconName
+    const tagName = this.tagName;
+    const iconName = this.iconName;
     if (tagName !== '' && tagName.trim() !== '' && tagName) {
-      this.$store.commit('createTag', {tagName,iconName});
+      this.$store.commit('createTag', {tagName, iconName});
       if (this.$store.state.createTagError) {
         window.alert(this.$store.state.createTagError.message);
       } else {
@@ -78,7 +75,7 @@ export default class AddLabel extends Vue {
 
 <style lang="scss" scoped>
 .topNav {
-  //color: #ccc;
+
   font-size: 16px;
   padding: 12px 16px;
   display: flex;

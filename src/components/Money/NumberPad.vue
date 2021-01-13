@@ -27,8 +27,9 @@ import {Component, Prop} from 'vue-property-decorator';
 
 @Component
 export default class NumberPad extends Vue {
-  @Prop(Number) value!: number
-  output = this.value.toString()
+  @Prop(Number) value!: number;
+  output = this.value.toString();
+
   inputContent(event: MouseEvent) {
     const button = event.target as HTMLButtonElement, input = button.textContent!
         , length = this.output.length;
@@ -92,32 +93,8 @@ export default class NumberPad extends Vue {
       border-radius: 5px;
     }
 
-    //$bg: #fff;
-    //
-    //:nth-child(1) {
-    //  background: $bg;
-    //}
-
-    //:nth-child(2), :nth-child(5) {
-    //  background: darken($bg, 3%);
-    //}
-    //
-    //:nth-child(3), :nth-child(6), :nth-child(9) {
-    //  background: darken($bg, 9%);
-    //}
-
-    //:nth-child(4), :nth-child(7), :nth-child(10) {
-    //  background: darken($bg, 12%);
-    //}
-    //
-    //:nth-child(8), :nth-child(11) {
-    //  background: darken($bg, 15%);
-    //}
-
     :nth-child(12) {
-      //background: darken($bg, 15%);
       width: 49%;
-
     }
 
     :nth-child(13) {
@@ -129,7 +106,7 @@ export default class NumberPad extends Vue {
       position: absolute;
       bottom: 0;
       right: 0;
-      //background: darken($bg, 21%);
+
     }
 
   }

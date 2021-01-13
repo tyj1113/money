@@ -26,22 +26,18 @@ import dayjs from 'dayjs';
 @Component({components: {NumberPad, Types, FormItem, Tags}})
 export default class Money extends Vue {
   record: RecordItem = {
-    tags: [],
+    tags: {},
     notes: '',
     type: '-',
     amount: 0,
     createAt: dayjs(new Date().toISOString()).format('YYYY-MM-DD')
   };
-  // created() {
-  //   this.$store.commit('fetchRecords');
-  // }
-
   saveRecord() {
     this.record.tags=this.$store.state.selectedTag;
-    if(this.record.tags.length===0){
+    if(this.record.tags=== {}){
       return window.alert('请至少选择一个标签')
     }
-    this.$store.commit('saveRecords', this.record);
+    this.$store.commit('saveRecord', this.record);
     if(this.$store.state.createRecordError===null){
       window.alert('已保存')
       this.$store.commit('selectedTagClear')

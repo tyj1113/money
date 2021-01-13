@@ -85,13 +85,6 @@ export default class Labels extends Vue {
       font-size: 18px;
     }
 
-    //.right svg {
-    //
-    //  width: 18px;
-    //  height: 18px;
-    //  color: #666;
-    //  margin: 0 16px 0 0;
-    //}
   }
 }
 
