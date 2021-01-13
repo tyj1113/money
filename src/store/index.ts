@@ -22,11 +22,19 @@ const store = new Vuex.Store({
     fetchRecords(state) {
       state.recordList = JSON.parse(window.localStorage.getItem('recordList') || '[]');
     },
-    saveRecords(state, record) {
+    saveRecord(state, record) {
       const newRecord: RecordItem = clone(record);
       newRecord.createAt = newRecord.createAt|| new Date().toISOString();
       state.recordList.push(newRecord);
       window.localStorage.setItem('recordList', JSON.stringify(state.recordList));
+    },
+    saveRecords(state, records) {
+      window.localStorage.setItem('recordList', JSON.stringify(records));
+    },
+    deleteRecord(state,payload){
+      const index=state.recordList.findIndex(item=>JSON.stringify(item)===JSON.stringify(payload))
+      state.recordList.splice(index,1)
+      store.commit('saveRecords',state.recordList)
     },
     fetchTags(state) {
       state.tagList = JSON.parse(window.localStorage.getItem('tagList') || '[]');

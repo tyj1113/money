@@ -1,5 +1,5 @@
 type RecordItem = {
-  tags: string[];
+  tags: {};
   notes: string;
   type: string;
   amount: number;
@@ -20,8 +20,8 @@ type TagListModel = {
 }
 type RootState={
   recordList:  RecordItem[];
-  tagList:  Tag[];
-  selectedTag: string;
+  tagList: Tag [] ;
+  selectedTag: string | {};
   createTagError: Error | null;
   createRecordError: Error | null;
   allTag: string [];
