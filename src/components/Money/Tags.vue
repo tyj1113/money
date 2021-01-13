@@ -1,16 +1,26 @@
 <template>
   <div class="tags">
-    <ul class="current">
-      <li v-for="tag in tags" :key="tag.id"
-          :class="selectedTag===tag.name && 'selected'"
-          @click="selected({tagName:tag.name,iconName:tag.iconName})"
+    <ul class="current" v-if="type==='edit'">
+      <li  v-for="tag in tags" :key="tag.id"
+          :class="selectedTag===tag.tagName && 'selected'"
+          @click="selected({tagName:tag.tagName,iconName:tag.iconName})"
       >
         <span class="iconWrapper">  <Icon :name="tag.iconName"/></span>
-        <span>{{ tag.name }}</span>
+        <span >{{ tag.tagName }}</span>
       </li>
-      <li @click="createTag">
-        <span class="iconWrapper">  <Icon name="bianji"/></span>
-        <span>编辑</span></li>
+        <router-link to="/labels" @click="this.$store.commit('selectedTagClear')">
+          <li>
+          <span class="iconWrapper">  <Icon name="bianji"/></span>
+          <span>编辑</span>
+          </li>
+        </router-link>
+    </ul>
+    <ul class="current" v-else>
+      <li  v-for="tag in tags" :key="tag"
+           :class="selectedTag===tag && 'selected'"
+           @click="selectedIcon(tag)">
+        <span class="iconWrapper">  <Icon :name="tag"/></span>
+      </li>
     </ul>
 
   </div>
@@ -18,15 +28,13 @@
 
 <script lang="ts">
 
-import {Component} from 'vue-property-decorator';
-import {TagCreate} from '@/mixins/TagCreate';
+import {Component, Prop} from 'vue-property-decorator';
+import Vue from 'vue';
 
 @Component
-export default class Tags extends TagCreate {
-  get tags() {
-    return this.$store.state.tagList;
-  }
-
+export default class Tags extends Vue {
+  @Prop(String) type: string;
+  @Prop() tags: [];
   get selectedTag() {
     return this.$store.state.selectedTag;
   }
@@ -37,6 +45,10 @@ export default class Tags extends TagCreate {
 
   selected({tagName,iconName}) {
     this.$store.commit('selectedTagUpdate', tagName);
+  }
+  selectedIcon(tag){
+    this.$store.commit('selectedTagUpdate', tag);
+
   }
 }
 </script>
@@ -85,17 +97,6 @@ export default class Tags extends TagCreate {
     }
   }
 
-  .new {
-    padding-top: 16px;
-
-    button {
-      background: transparent;
-      border: none;
-      color: #999;
-      padding: 0 4px;
-      border-bottom: 1px solid;
-    }
-  }
 }
 
 </style>
