@@ -54,22 +54,6 @@ export default class AddLabel extends Vue {
     this.$router.replace('/labels');
   }
 
-  remove() {
-    if (this.tag) {
-      this.$store.commit('removeTags', this.tag);
-    } else {
-      window.alert('删除失败');
-    }
-  }
-
-  updateTag(name: string) {
-    if (name === '' || name.trim() === '') return window.alert('标签名不能为空或纯空格');
-    if (this.tag) {
-      this.$store.commit('updateTagName', {id: this.tag.id, name});
-    }
-  }
-
-
 }
 </script>
 
