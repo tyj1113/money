@@ -39,10 +39,20 @@ const store = new Vuex.Store({
     fetchTags(state) {
       state.tagList = JSON.parse(window.localStorage.getItem('tagList') || '[]');
       if(state.tagList.length===0){
-        store.commit('createTag',{tagName:'衣',iconName:'clothes'})
-        store.commit('createTag',{tagName:'食',iconName:'eat'})
-        store.commit('createTag',{tagName:'住',iconName:'rent'})
-        store.commit('createTag',{tagName:'行',iconName:'huwai'})
+        store.commit('createTag',{tagName:'狗粮',iconName:'pets'})
+        store.commit('createTag',{tagName:'话费',iconName:'phonebill'})
+        store.commit('createTag',{tagName:'买菜',iconName:'maicai'})
+        store.commit('createTag',{tagName:'吃饭',iconName:'eat'})
+        store.commit('createTag',{tagName:'看电影',iconName:'movie'})
+        store.commit('createTag',{tagName:'买衣服',iconName:'clothes'})
+        store.commit('createTag',{tagName:'看医生',iconName:'seedoctor'})
+        store.commit('createTag',{tagName:'房租',iconName:'rent'})
+        store.commit('createTag',{tagName:'爬山',iconName:'huwai'})
+        store.commit('createTag',{tagName:'旅行',iconName:'lvxing'})
+        store.commit('createTag',{tagName:'兼职',iconName:'jianzhi'})
+        store.commit('createTag',{tagName:'奖金',iconName:'jiangjin'})
+        store.commit('createTag',{tagName:'分红',iconName:'fenhong'})
+        store.commit('createTag',{tagName:'工资',iconName:'gongzi'})
       }
     },
     createTag(state, {tagName,iconName}) {
