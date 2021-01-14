@@ -33,8 +33,8 @@ import Vue from 'vue';
 
 @Component
 export default class Tags extends Vue {
-  @Prop(String) type: string;
-  @Prop() tags: [];
+  @Prop(String) type?: string;
+  @Prop() tags?: [];
   get selectedTag() {
     return this.$store.state.selectedTag;
   }
@@ -43,10 +43,10 @@ export default class Tags extends Vue {
     this.$store.commit('fetchTags');
   }
 
-  selected(tag) {
+  selected(tag: string) {
     this.$store.commit('selectedTagUpdate', tag);
   }
-  selectedIcon(tag){
+  selectedIcon(tag: string){
     this.$store.commit('selectedTagUpdate', tag);
 
   }

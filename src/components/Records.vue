@@ -30,12 +30,12 @@ import dayjs from 'dayjs';
 
 @Component
 export default class Records extends Vue {
-  @Prop(String) type: string;
-  @Prop() groupList: [];
+  @Prop(String) type?: string;
+  @Prop() groupList?: [];
   beforeCreate() {
     this.$store.commit('fetchRecords');
   }
-  remove(item){
+  remove(item: RecordItem){
     const flag=window.confirm('确定要删除吗')
     if(flag){
       this.$store.commit('deleteRecord',item)

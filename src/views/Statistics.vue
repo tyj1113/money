@@ -37,7 +37,6 @@ export default class Statistics extends Vue {
   }
   get axisData() {
     const month = this.currentMonth,length=dayjs(month).daysInMonth(),last=`${month}-${length}`;
-    console.log(last)
     const array: { date: string; total: number } [] = [];
     for (let i = 0; i < length; i++) {
       array.unshift({date: dayjs(last).subtract(i, 'day').format('YYYY-MM-DD'), total: 0});

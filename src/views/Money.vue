@@ -3,7 +3,7 @@
     <Layout classPrefix="layout">
       <NumberPad :value.sync="record.amount" @submit="saveRecord"/>
       <div class="notes">
-        <FormItem :value.sync="record.notes" placeholder="在这里添加备注" title="备注"  />
+        <FormItem :value.sync="record.notes" placeholder="在这里添加备注" title="备注"  maxlength="20" />
       </div>
       <FormItem :value.sync="record.createAt" placeholder="在这里输入日期" title="日期"  type="date"/>
       <Tags type="edit" :tags="this.$store.state.tagList" />
