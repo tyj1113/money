@@ -7,7 +7,7 @@
     </div>
     <Tags :tags="this.$store.state.allTag"/>
     <div class="form-wrapper">
-      <FormItem placeholder="请输入标签名最大支持长度为4" :value.sync="tagName"/>
+      <FormItem placeholder="请输入标签名最大支持长度为4" :value.sync="tagName" maxlength="4"/>
     </div>
     <div class="button-wrapper">
       <Button @click.native="createTag">添加标签</Button>

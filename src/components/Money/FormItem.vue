@@ -5,7 +5,7 @@
       <input :type="type || 'text' " :placeholder="placeholder" :value="formatDate(value)" @input="onValueChanged($event.target.value)">
     </template>
     <template v-else>
-      <input maxlength="4" :type="type || 'text' " :placeholder="placeholder" :value="value" @input="onValueChanged($event.target.value)">
+      <input :maxlength="maxlength" :type="type || 'text' " :placeholder="placeholder" :value="value" @input="onValueChanged($event.target.value)">
     </template>
   </label>
 </template>
@@ -21,6 +21,7 @@ export default class FormItem extends Vue {
   @Prop(String) value?: string;
   @Prop(String) placeholder?: string;
   @Prop(String) type?: string;
+  @Prop(String) maxlength?: string;
   formatDate(date: string){
     return dayjs(date).format('YYYY-MM-DD')
   }
