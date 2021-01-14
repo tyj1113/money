@@ -46,7 +46,7 @@ export default class AddLabel extends Vue {
         this.$router.replace('/labels');
       }
     } else {
-      window.alert('无效参数');
+      window.alert('请输入标签名不支持为空或者空格');
     }
   }
 
