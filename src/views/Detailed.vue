@@ -1,7 +1,8 @@
 <template>
   <div>
     <Layout>
-      <Types :value.sync="type" class-prefix="type"/>
+      <Types :value.sync="type" class-prefix="type" class="type"/>
+      <div class="later">最近30天明细</div>
       <div class="chartWrapper" ref="chartWrapper">
         <Chart :option="chartOption" class="chart"/>
       </div>
@@ -138,6 +139,10 @@ export default class Statistics extends Vue {
 </script>
 
 <style lang="scss" scoped>
+
+.later{
+margin: 15px;
+}
 .chart {
   width: 430%;
 
