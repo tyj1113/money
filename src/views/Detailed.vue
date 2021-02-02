@@ -42,8 +42,12 @@ export default class Statistics extends Vue {
   }
 
   get groupList() {
+    const today = dayjs(new Date()).format('YYYY-MM-DD'),
+        firstDay = dayjs(new Date()).subtract(30, 'day').format('YYYY-MM-DD');
     const {recordList} = this;
-    const newList = clone(recordList).filter(r => r.type === this.type).sort((a, b) => dayjs(b.createAt).valueOf() - dayjs(a.createAt).valueOf());
+    const newList = clone(recordList).filter(r => r.type === this.type)
+        .filter(r => r.createAt >= firstDay && r.createAt <= today)
+        .sort((a, b) => dayjs(b.createAt).valueOf() - dayjs(a.createAt).valueOf());
     if (newList.length === 0) return [];
     type Result = { title: string; total: number; items: RecordItem[] }[]
     const result: Result = [
@@ -140,9 +144,10 @@ export default class Statistics extends Vue {
 
 <style lang="scss" scoped>
 
-.later{
-margin: 15px;
+.later {
+  margin: 15px;
 }
+
 .chart {
   width: 430%;
 
